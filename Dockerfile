@@ -37,6 +37,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 USER $USERNAME
 WORKDIR /home/${USERNAME}
 
+# Create the dedicated code directory
+RUN mkdir -p /home/${USERNAME}/code
+
 # Install Isolated Go
 RUN mkdir -p ~/usr/local && \
     wget -q https://go.dev/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
@@ -57,13 +60,13 @@ RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VER
 # --- Copy Configuration Template ---
 COPY --chown=${USER_UID}:${USER_GID} opencode.json /home/${USERNAME}/opencode.json
 
-# --- Finalize Skeleton for Persistence Strategy ---
+# --- Finalize template for Persistence Strategy ---
 USER root
 
-# Create the skeleton to preserve the tools for the InitContainer sync
-RUN mkdir -p /opt/skeleton && \
-    cp -rp /home/${USERNAME}/. /opt/skeleton/ && \
-    chown -R ${USER_UID}:${USER_GID} /opt/skeleton
+# Create the template to preserve the tools for the InitContainer sync
+RUN mkdir -p /opt/template && \
+    cp -rp /home/${USERNAME}/. /opt/template/ && \
+    chown -R ${USER_UID}:${USER_GID} /opt/template
 
 # Final Context
 USER $USERNAME
