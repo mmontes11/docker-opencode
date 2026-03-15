@@ -13,7 +13,7 @@ ARG USER_GID=$USER_UID
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC \
     GOPATH=/home/${USERNAME}/go \
-    PATH=/home/${USERNAME}/usr/local/go/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:/home/${USERNAME}/.npm-global/bin:$PATH \
+    PATH=/home/${USERNAME}/.local/bin:/home/${USERNAME}/.opencode/bin:/home/${USERNAME}/usr/local/go/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.cargo/bin:/home/${USERNAME}/.npm-global/bin:$PATH \    
     OLLAMA_HOST="http://ollama:11434" 
 
 # System Essentials
