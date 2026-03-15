@@ -12,8 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     SHELL=/bin/bash \
     EDITOR=vim \
     GOPATH=/home/mmontes/go \
-    PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-    OLLAMA_HOST="http://ollama:11434"
+    PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Install System Essentials
 RUN apt-get update && apt-get install -y --no-install-recommends \
