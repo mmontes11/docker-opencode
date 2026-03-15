@@ -34,6 +34,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 USER mmontes
 WORKDIR /home/mmontes
 
+# Code directory
+RUN mkdir /home/mmontes/code
+
 # Install Go
 RUN mkdir -p ~/usr/local && \
     wget -q https://go.dev/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
