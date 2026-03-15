@@ -9,20 +9,23 @@ ARG OPENCODE_VERSION=1.2.26
 # Environment
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC \
+    SHELL=/bin/bash \
+    EDITOR=vim \
     GOPATH=/home/mmontes/go \
     PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
     OLLAMA_HOST="http://ollama:11434"
 
 # Install System Essentials
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl git git-lfs vim tmux jq htop ripgrep build-essential \
+    curl git git-lfs openssh-client \
+    vim tmux jq htop ripgrep build-essential \
     unzip wget ca-certificates sudo libmagic1 rsync \
     python3-dev libffi-dev libssl-dev gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
 # Create User and configure Sudo
 RUN groupadd --gid 1111 mmontes \
-    && useradd --uid 1111 --gid 1111 -m mmontes \
+    && useradd --uid 1111 --gid 1111 -m -s /bin/bash mmontes \
     && echo "mmontes ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/mmontes \
     && chmod 0440 /etc/sudoers.d/mmontes
 
@@ -53,8 +56,6 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 # Install OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
-
-# OpenCode default config
 RUN mkdir -p /home/mmontes/.config/opencode
 COPY --chown=1111:1111 opencode.json /home/mmontes/.config/opencode/opencode.json
 
