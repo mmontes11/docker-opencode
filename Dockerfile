@@ -10,7 +10,7 @@ ARG OPENCODE_VERSION=1.2.26
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC \
     GOPATH=/home/mmontes/go \
-    PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.cargo/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
+    PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
     OLLAMA_HOST="http://ollama:11434"
 
 # Install System Essentials
@@ -51,6 +51,10 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 # Install OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
 
+# OpenCode default config
+RUN mkdir -p /home/mmontes/.config/opencode
+COPY --chown=1111:1111 opencode.json /home/mmontes/.config/opencode/opencode.json
+
 # Create the Persistence Template for initContainer sync
 USER root
 RUN mkdir -p /opt/template && \
@@ -63,4 +67,4 @@ WORKDIR /home/mmontes
 EXPOSE 4096
 
 # Absolute path for Entrypoint to bypass PATH resolution issues entirely
-ENTRYPOINT ["/home/mmontes/.opencode/bin/opencode", "serve", "--port", "4096", "--host", "0.0.0.0", "--workspace", "/home/mmontes"]
+ENTRYPOINT ["opencode", "web", "--port", "4096", "--hostname", "0.0.0.0", "--cors", "opencode.mmontes-internal.duckdns.org"]
