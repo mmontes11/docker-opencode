@@ -23,6 +23,38 @@
           }
         }
       }
+    },
+    "llama-qwen35-35b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Llama.cpp",
+      "options": {
+        "baseURL": "http://llama-qwen35-35b:8080/v1"
+      },
+      "models": {
+        "qwen35-35b": {
+          "name": "qwen35-35b",
+          "limit": {
+            "context": 49152,
+            "output": 65536
+          }
+        }
+      }
+    },
+    "llama-qwen35-35b-3q": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Llama.cpp",
+      "options": {
+        "baseURL": "http://llama-qwen35-35b-q3:8080/v1"
+      },
+      "models": {
+        "qwen35-35b-3q": {
+          "name": "qwen35-35b-3q",
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          }
+        }
+      }
     }
   },
   "mcp": {
@@ -46,12 +78,12 @@
       "type": "remote",
       "url": "http://mcp-photoprism-xiaowen:9001/mcp"
     },
-    "github": {
+	  "github": {
+     	"type": "remote",
       "enabled": true,
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp",
-      "headers": {
-        "Authorization": "Bearer $GITHUB_TOKEN",
+			"url": "https://api.githubcopilot.com/mcp/",
+			"headers": {
+        "Authorization": "Bearer {env:GITHUB_TOKEN}",
         "X-MCP-Readonly": "true"
       }
     }
