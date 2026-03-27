@@ -1,5 +1,37 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "model": "llama-qwen35-35b-3q/llama-qwen35-35b-3q",
+  "small_model": "gpt-oss:20b-ctx128k",
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "grep": "allow",
+      "git *": "allow",
+      "git commit *": "ask",
+      "git push *": "deny",
+      "rm *": "deny",
+      ":(){:|:&};:": "deny"
+    },
+    "edit": "ask",
+    "write": "ask",
+    "read": "allow",
+    "skill": "allow",
+    "webfetch": "allow",
+    "websearch": "allow"
+  },
+  "agent": {
+    "kubernetes": {
+      "model": "llama-qwen35-35b-3q/llama-qwen35-35b-3q",
+      "temperature": 0.1,
+      "description": "Expert SRE focused on diagnosing complex Kubernetes issues: compute, storage, databases, and infrastructure failures.",
+      "prompt": "You are a Senior Kubernetes Site Reliability Engineer (SRE). Your expertise lies in the intersection Kubernetes infrastructure and stateful workloads (databases). When troubleshooting, perform a root-cause analysis and make suggestions to resolve the problem.",
+      "permission": {
+        "write": "deny",
+        "edit": "deny"
+      }
+    }
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
