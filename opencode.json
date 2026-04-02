@@ -2,7 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
   "model": "llama.cpp/qwen35:35b-ctx256k",
-  "small_model": "llama.cpp/gpt-oss:20b-ctx128k",
   "permission": {
     "bash": {
       "*": "ask",
@@ -44,13 +43,6 @@
           "name": "qwen35:35b-ctx256k",
           "limit": {
             "context": 262144,
-            "output": 65536
-          }
-        },
-        "gpt-oss:20b-ctx128k": {
-          "name": "gpt-oss:20b-ctx128k",
-          "limit": {
-            "context": 131072,
             "output": 65536
           }
         }
