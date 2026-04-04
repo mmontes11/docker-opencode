@@ -8,7 +8,7 @@
       "grep": "allow",
       "git *": "allow",
       "git commit *": "ask",
-      "git push *": "deny",
+      "git push *": "ask",
       "rm *": "deny",
       ":(){:|:&};:": "deny"
     },
@@ -43,6 +43,13 @@
           "name": "qwen35:35b-ctx256k",
           "limit": {
             "context": 262144,
+            "output": 65536
+          }
+        },
+        "qwen35:27b-ctx128k": {
+          "name": "qwen35:27b-ctx128k",
+          "limit": {
+            "context": 131072,
             "output": 65536
           }
         },
