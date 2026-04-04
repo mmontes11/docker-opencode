@@ -4,7 +4,7 @@ FROM nvidia/cuda:13.1.0-devel-ubuntu24.04
 # Build Arguments for version control
 ARG UV_VERSION=0.11.11
 ARG GOLANG_VERSION=1.26.1
-ARG OPENCODE_VERSION=1.3.3
+ARG OPENCODE_VERSION=1.3.13
 
 # Environment
 ENV DEBIAN_FRONTEND=noninteractive \
