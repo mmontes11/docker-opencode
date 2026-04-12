@@ -56,7 +56,6 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 # Install OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
 RUN mkdir -p /home/mmontes/.config/opencode/skills /home/mmontes/scripts
-COPY --chown=1111:1111 opencode.json /home/mmontes/.config/opencode/opencode.json
 COPY --chown=1111:1111 scripts/ /home/mmontes/scripts/
 RUN chmod +x /home/mmontes/scripts/*.sh && \
     /bin/bash /home/mmontes/scripts/skills.sh
