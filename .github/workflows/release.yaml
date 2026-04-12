@@ -53,9 +53,9 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/amd64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/ai-workspace:${{ steps.vars.outputs.VERSION }}
-            ghcr.io/${{ github.repository_owner }}/ai-workspace:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/ai-workspace:latest
+            ghcr.io/${{ github.repository_owner }}/opencode:${{ steps.vars.outputs.VERSION }}
+            ghcr.io/${{ github.repository_owner }}/opencode:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/opencode:latest
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.source=${{ github.event.repository.html_url }}

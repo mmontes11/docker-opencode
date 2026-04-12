@@ -33,16 +33,16 @@ Docker image equipped with AI tools to be used as a [Pod of my homelab](https://
 ## Installation
 
 ```bash
-docker pull mmontes11/docker-ai-workspace:0.10.0
+docker pull mmontes11/opencode:1.3.13
 ```
 
 ## Running
 
 ```bash
 docker run -d \
-  --name ai-workspace \
+  --name opencode \
   -p 4096:4096 \
-  mmontes11/docker-ai-workspace:0.10.0
+  mmontes11/opencode:1.3.13
 ```
 
 Access the web interface at `http://localhost:4096`.
