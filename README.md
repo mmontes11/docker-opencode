@@ -9,27 +9,6 @@ Docker image equipped with AI tools, such as opencode, to be used as a [Pod of m
 - **MCP Integration**: GitHub, Grafana, Kubernetes, and PhotoPrism MCP servers
 - **Development Tools**: Go, Node.js, Python, and essential CLI utilities
 
-## Model Configuration
-
-### Primary Models
-- **qwen35-35b-ctx256k**: 256K context window for long-form analysis
-- **gpt-oss:20b-ctx128k**: 128K context for balanced performance
-- **qwen3-coder:30b**: Specialized for code generation and review
-
-### Providers
-- **Ollama**: `http://ollama.ai.svc.cluster.local:11434/v1`
-- **Llama.cpp**: `http://llama-qwen35-35b-ctx256k.ai.svc.cluster.local:8080/v1`
-
-## MCP Servers
-
-| Server | Purpose |
-|--------|---------|
-| GitHub | Repository management and PR operations |
-| Grafana | Monitoring and observability |
-| Kubernetes | Cluster management and debugging |
-| PhotoPrism mmontes | Personal photo library |
-| PhotoPrism xiaowen | Shared photo library |
-
 ## Installation
 
 ```bash
