@@ -4,7 +4,7 @@ FROM nvidia/cuda:13.1.0-devel-ubuntu24.04
 # Build Arguments for version control
 ARG UV_VERSION=0.11.11
 ARG GOLANG_VERSION=1.26.1
-ARG OPENCODE_VERSION=1.3.13
+ARG OPENCODE_VERSION=1.4.11
 
 # Environment
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -22,9 +22,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev libffi-dev libssl-dev gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
-# Create User and configure Sudo
+# Install Docker
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update && apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create User and configure sudo
 RUN groupadd --gid 1111 mmontes \
     && useradd --uid 1111 --gid 1111 -m -s /bin/bash mmontes \
+    && usermod -aG docker mmontes \
     && echo "mmontes ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/mmontes \
     && chmod 0440 /etc/sudoers.d/mmontes
 
@@ -37,7 +46,7 @@ USER mmontes
 WORKDIR /home/mmontes
 
 # Code directory
-RUN mkdir /home/mmontes/code
+RUN mkdir -p /home/mmontes/code /home/mmontes/scripts /home/mmontes/.config/opencode/skills 
 
 # Install Go
 RUN mkdir -p ~/usr/local && \
@@ -58,7 +67,6 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 # Install OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
-RUN mkdir -p /home/mmontes/.config/opencode/skills /home/mmontes/scripts
 COPY --chown=1111:1111 scripts/ /home/mmontes/scripts/
 RUN chmod +x /home/mmontes/scripts/*.sh && \
     /bin/bash /home/mmontes/scripts/skills.sh
