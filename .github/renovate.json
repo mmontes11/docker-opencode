@@ -12,5 +12,11 @@
       "depNameTemplate": "anomalyco/opencode",
       "packageNameTemplate": "anomalyco/opencode"
     }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
   ]
 }
