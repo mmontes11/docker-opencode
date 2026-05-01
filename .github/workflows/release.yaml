@@ -40,7 +40,32 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
           echo "Extracted version: ${VERSION}"
 
+      - name: Get latest tag version
+        id: tag-version
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [[ -n "$LATEST_TAG" ]]; then
+            TAG_VERSION=${LATEST_TAG#v}
+            echo "TAG_VERSION=${TAG_VERSION}" >> $GITHUB_OUTPUT
+            echo "Latest tag: v${TAG_VERSION}"
+          else
+            echo "TAG_VERSION=" >> $GITHUB_OUTPUT
+            echo "No tags found"
+          fi
+
+      - name: Check if version changed
+        id: check
+        run: |
+          if [[ "${{ steps.version.outputs.VERSION }}" == "${{ steps.tag-version.outputs.TAG_VERSION }}" ]]; then
+            echo "VERSION_CHANGED=false" >> $GITHUB_OUTPUT
+            echo "Version unchanged, skipping release"
+          else
+            echo "VERSION_CHANGED=true" >> $GITHUB_OUTPUT
+            echo "Version changed from ${{ steps.tag-version.outputs.TAG_VERSION }} to ${{ steps.version.outputs.VERSION }}"
+          fi
+
       - name: Create tag
+        if: steps.check.outputs.VERSION_CHANGED == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -48,6 +73,7 @@ jobs:
           git push origin "v${{ steps.version.outputs.VERSION }}" --force
 
       - name: Publish Docker image
+        if: steps.check.outputs.VERSION_CHANGED == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -64,6 +90,7 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
 
       - name: Create GitHub Release
+        if: steps.check.outputs.VERSION_CHANGED == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.VERSION }}
