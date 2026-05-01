@@ -1,11 +1,9 @@
 name: Release
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
 
 permissions:
   contents: write
@@ -14,13 +12,11 @@ permissions:
 jobs:
   release:
     name: Build and Push
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'renovate/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
 
       - name: Setup QEMU
