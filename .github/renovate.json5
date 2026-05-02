@@ -35,7 +35,6 @@
         'github-actions',
       ],
       automerge: true,
-      ignoreTests: true,
     },
     {
       matchDatasources: [
