@@ -1,38 +1,55 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
   ],
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": ["OPENCODE_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "anomalyco/opencode",
-      "packageNameTemplate": "anomalyco/opencode"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^Dockerfile$/',
+      ],
+      matchStrings: [
+        'OPENCODE_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)',
+      ],
+      datasourceTemplate: 'github-releases',
+      depNameTemplate: 'anomalyco/opencode',
+      packageNameTemplate: 'anomalyco/opencode',
     },
     {
-      "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": ["K8S_TOOLING_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "mmontes11/k8s-tooling",
-      "packageNameTemplate": "mmontes11/k8s-tooling"
-    }
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^Dockerfile$/',
+      ],
+      matchStrings: [
+        'K8S_TOOLING_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)',
+      ],
+      datasourceTemplate: 'github-releases',
+      depNameTemplate: 'mmontes11/k8s-tooling',
+      packageNameTemplate: 'mmontes11/k8s-tooling',
+    },
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchManagers": ["github-actions"],
-      "automerge": true,
-      // see: https://docs.renovatebot.com/key-concepts/automerge/#absence-of-tests,
-      "ignoreTests": true
+      matchManagers: [
+        'github-actions',
+      ],
+      automerge: true,
+      ignoreTests: true,
     },
     {
-      "matchDatasources": ["github-releases"],
-      "matchPackageNames": ["anomalyco/opencode", "mmontes11/k8s-tooling"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    }
-  ]
+      matchDatasources: [
+        'github-releases',
+      ],
+      matchPackageNames: [
+        'anomalyco/opencode',
+        'mmontes11/k8s-tooling',
+      ],
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+      ],
+      automerge: true,
+    },
+  ],
 }
