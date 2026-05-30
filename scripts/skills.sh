@@ -34,8 +34,8 @@ for entry in "${SKILLS[@]}"; do
   IFS="|" read -r repo skill_name <<< "$entry"
   echo "Installing skill '${skill_name}' from ${repo}..."
   
-  npx skills add "$repo" --skill "$skill_name" -g -a opencode -y
+  npx skills add "$repo" --skill "$skill_name" -g -a opencode -y || true
   echo "Done!"
 done
 
-npx skills list -g
+npx skills list -g || true
