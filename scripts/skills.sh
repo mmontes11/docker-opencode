@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+echo "Installing mmontes skills..."
+
+npx skills add "https://github.com/mmontes11/skills" -g -a opencode -a claude-code -y || true
+
 # Format: "RepoURL|SkillName"
 SKILLS=(
   "https://github.com/fluxcd/agent-skills|gitops-cluster-debug"
@@ -34,7 +38,7 @@ for entry in "${SKILLS[@]}"; do
   IFS="|" read -r repo skill_name <<< "$entry"
   echo "Installing skill '${skill_name}' from ${repo}..."
   
-  npx skills add "$repo" --skill "$skill_name" -g -a opencode -y || true
+  npx skills add "$repo" --skill "$skill_name" -g -a opencode -a claude-code -y || true
   echo "Done!"
 done
 
