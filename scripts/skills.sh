@@ -3,20 +3,27 @@
 set -euo pipefail
 
 echo "Installing mmontes skills..."
-
 npx skills add "https://github.com/mmontes11/skills" -g -a opencode -a claude-code -y || true
 
 # Format: "RepoURL|SkillName"
 SKILLS=(
+  "https://github.com/anthropics/skills|canvas-design"
+  "https://github.com/anthropics/skills|docx"
+  "https://github.com/anthropics/skills|internal-comms"
+  "https://github.com/anthropics/skills|mcp-builder"
+  "https://github.com/anthropics/skills|pdf"
+  "https://github.com/anthropics/skills|pptx"
+  "https://github.com/anthropics/skills|skill-creator"
+  "https://github.com/anthropics/skills|xlsx"
   "https://github.com/fluxcd/agent-skills|gitops-cluster-debug"
   "https://github.com/fluxcd/agent-skills|gitops-knowledge"
-  "https://github.com/github/awesome-copilot|git-commit"
   "https://github.com/github/awesome-copilot|create-architectural-decision-record"
   "https://github.com/github/awesome-copilot|create-github-action-workflow-specification"
   "https://github.com/github/awesome-copilot|create-github-issues-feature-from-implementation-plan"
   "https://github.com/github/awesome-copilot|create-github-pull-request-from-specification"
   "https://github.com/github/awesome-copilot|create-readme"
   "https://github.com/github/awesome-copilot|gh-cli"
+  "https://github.com/github/awesome-copilot|git-commit"
   "https://github.com/github/awesome-copilot|github-issues"
   "https://github.com/github/awesome-copilot|go-mcp-server-generator"
   "https://github.com/github/awesome-copilot|openapi-to-application-code"
@@ -37,7 +44,6 @@ SKILLS=(
 for entry in "${SKILLS[@]}"; do
   IFS="|" read -r repo skill_name <<< "$entry"
   echo "Installing skill '${skill_name}' from ${repo}..."
-  
   npx skills add "$repo" --skill "$skill_name" -g -a opencode -a claude-code -y || true
   echo "Done!"
 done
