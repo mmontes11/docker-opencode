@@ -1,5 +1,5 @@
 # Base Image: CUDA 13.1 Devel for Blackwell support
-FROM nvidia/cuda:13.1.0-devel-ubuntu24.04
+FROM nvidia/cuda:13.3.0-devel-ubuntu24.04
 
 # Build Arguments for version control
 ARG UV_VERSION=0.11.11
