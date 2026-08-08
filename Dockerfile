@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl git git-lfs gh openssh-client \
     vim tmux jq htop ripgrep build-essential \
-    unzip wget ca-certificates sudo libmagic1 rsync \
+    unzip wget ca-certificates sudo libmagic1 ffmpeg rsync \
     python3-dev libffi-dev libssl-dev gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
