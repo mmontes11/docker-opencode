@@ -71,7 +71,7 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
 
 # Install Multica CLI
-RUN ARCH=$(dpkg --print-architecture | sed 's/aarch64/arm64/;s/amd64/amd64/') && \
+RUN ARCH=$(dpkg --print-architecture | sed 's/aarch64/arm64/') && \
     curl -fsSL "https://github.com/multica-ai/multica/releases/download/v${MULTICA_VERSION}/multica-cli-${MULTICA_VERSION}-linux-${ARCH}.tar.gz" -o /tmp/multica.tar.gz && \
     tar -xzf /tmp/multica.tar.gz -C /tmp multica && \
     sudo mv /tmp/multica /usr/local/bin/multica && \
