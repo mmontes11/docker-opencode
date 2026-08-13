@@ -5,6 +5,7 @@ FROM nvidia/cuda:13.1.0-devel-ubuntu24.04
 ARG UV_VERSION=0.11.11
 ARG GOLANG_VERSION=1.26.1
 ARG OPENCODE_VERSION=1.18.18
+ARG MULTICA_VERSION=0.4.25
 ARG CLAUDE_VERSION=2.1.229
 ARG K8S_TOOLING_VERSION=0.64.0
 
@@ -70,7 +71,10 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
 
 # Install Multica CLI
-RUN curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash
+RUN curl -fsSL "https://github.com/multica-ai/multica/releases/download/v${MULTICA_VERSION}/multica-cli-${MULTICA_VERSION}-linux-amd64.tar.gz" -o /tmp/multica.tar.gz && \
+    tar -xzf /tmp/multica.tar.gz -C /tmp multica && \
+    sudo mv /tmp/multica /usr/local/bin/multica && \
+    rm /tmp/multica.tar.gz
 
 # Install Claude Code
 RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_VERSION}
