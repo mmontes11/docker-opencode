@@ -32,6 +32,8 @@ SKILLS=(
   "https://github.com/github/awesome-copilot|sql-code-review"
   "https://github.com/github/awesome-copilot|sql-optimization"
   "https://github.com/github/awesome-copilot|web-coder"
+  "https://github.com/mariadb-operator/mariadb-operator|mariadb-operator-comment"
+  "https://github.com/mariadb-operator/mariadb-operator|mariadb-operator-pr-review"
   "https://github.com/openai/skills|security-best-practices"
   "https://github.com/openai/skills|security-ownership-map"
   "https://github.com/openai/skills|security-threat-model"
