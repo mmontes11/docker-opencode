@@ -6,7 +6,7 @@ echo "Installing mmontes skills..."
 npx skills add "https://github.com/mmontes11/skills" -g -a opencode -a claude-code -y || true
 
 echo "Installing mariadb-operator skills..."
-npx skills add "https://github.com/mariadb-operator/mariadb-operator" --skill '*' -g -a opencode -a claude-code -y || true
+npx skills add "https://github.com/mariadb-operator/mariadb-operator" -g -a opencode -a claude-code -y || true
 
 # Format: "RepoURL|SkillName"
 SKILLS=(
