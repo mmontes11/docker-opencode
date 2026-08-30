@@ -35,6 +35,7 @@ SKILLS=(
   "https://github.com/github/awesome-copilot|sql-code-review"
   "https://github.com/github/awesome-copilot|sql-optimization"
   "https://github.com/github/awesome-copilot|web-coder"
+  "https://github.com/MiniMax-AI/MiniMax-H3|h3-prompt-writing"
   "https://github.com/openai/skills|security-best-practices"
   "https://github.com/openai/skills|security-ownership-map"
   "https://github.com/openai/skills|security-threat-model"
