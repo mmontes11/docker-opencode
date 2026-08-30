@@ -57,7 +57,7 @@ RUN mkdir -p ~/usr/local && \
     rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 # Install k8s-tooling
-RUN curl -sfL https://raw.githubusercontent.com/mmontes11/k8s-tooling/v${K8S_TOOLING_VERSION}/kubernetes.sh | sudo bash -s - && sudo chown -R mmontes:mmontes /home/mmontes/.local
+RUN curl -sfL https://raw.githubusercontent.com/mmontes11/k8s-tooling/v${K8S_TOOLING_VERSION}/kubernetes.sh | sudo K9S_SKIN=modus-vivendi bash bash -s - && sudo chown -R mmontes:mmontes /home/mmontes/.local
 
 # Install Node
 RUN mkdir -p ~/.npm-global && \
