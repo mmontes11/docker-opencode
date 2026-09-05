@@ -19,7 +19,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install System Essentials
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl git git-lfs gh openssh-client \
+    curl git git-lfs gh openssh-client mariadb-client \
     vim tmux jq htop ripgrep build-essential \
     unzip wget ca-certificates sudo libmagic1 ffmpeg rsync lsof \
     python3-dev libffi-dev libssl-dev gettext-base \
