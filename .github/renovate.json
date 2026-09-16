@@ -51,6 +51,18 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "multica-ai/multica",
       "packageNameTemplate": "multica-ai/multica"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "GOLANG_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
+      ],
+      "datasourceTemplate": "golang-version",
+      "depNameTemplate": "go",
+      "packageNameTemplate": "go"
     }
   ],
   "packageRules": [
@@ -81,6 +93,19 @@
       ],
       "matchPackageNames": [
         "@anthropic-ai/claude-code"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "matchDatasources": [
+        "golang-version"
+      ],
+      "matchPackageNames": [
+        "go"
       ],
       "matchUpdateTypes": [
         "minor",
