@@ -4,7 +4,7 @@ Docker image equipped with AI tools, such as opencode, to be used as a [Pod of m
 
 ## Features
 
-- **CUDA 13.1**: Latest NVIDIA CUDA toolkit with Blackwell support
+- **Ubuntu 24.04 base**: Lean vanilla Ubuntu image (CUDA-free; opencode is CPU-only)
 - **AI Models**: Configured with multiple LLM providers via Ollama and Llama.cpp
 - **MCP Integration**: GitHub, Grafana, Kubernetes, and PhotoPrism MCP servers
 - **Development Tools**: Go, Node.js, Python, essential CLI utilities, and [k8s-tooling](https://github.com/mmontes11/k8s-tooling)
