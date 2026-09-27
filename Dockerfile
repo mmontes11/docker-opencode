@@ -1,5 +1,6 @@
-# Base Image: Vanilla Ubuntu 24.04 (opencode is CPU-only; no CUDA runtime needed)
-FROM ubuntu:24.04
+# Base Image: Vanilla Ubuntu 24.04 LTS (opencode is CPU-only; no CUDA runtime needed)
+# Tag is locked to the 24.04 LTS series; the digest is auto-updated by Renovate on each 24.04 point release (see .github/renovate.json).
+FROM ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3
 
 # Build Arguments for version control
 ARG UV_VERSION=0.11.11

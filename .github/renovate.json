@@ -112,6 +112,17 @@
         "patch"
       ],
       "automerge": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ubuntu"
+      ],
+      "matchUpdateTypes": [
+        "digest"
+      ]
     }
   ]
 }
