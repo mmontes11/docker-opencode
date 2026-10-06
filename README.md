@@ -8,6 +8,7 @@ Docker image equipped with AI tools, such as opencode, to be used as a [Pod of m
 - **AI Models**: Configured with multiple LLM providers via Ollama and Llama.cpp
 - **MCP Integration**: GitHub, Grafana, Kubernetes, and PhotoPrism MCP servers
 - **Development Tools**: Go, Node.js, Python, essential CLI utilities, and [k8s-tooling](https://github.com/mmontes11/k8s-tooling)
+- **Mermaid Diagrams**: Turnkey `mermaid-render` (mmdc) for rendering mermaid diagrams to SVG/PNG
 
 ## Installation
 
@@ -37,6 +38,18 @@ Installed skills include:
 - Security best practices
 - SQL optimization and code review
 - Architectural decision records
+
+## Mermaid diagrams
+
+The image ships with [`mermaid-cli`](https://mermaid.js.org/intro/getting-started.html) (`mmdc`) and its headless Chromium runtime (Chromium shared libraries + the Puppeteer Chrome binary) so diagrams can be rendered without any extra setup. A default `--no-sandbox` Puppeteer config is baked in (required to run headless Chromium as a non-root user in a container).
+
+Render a diagram with the turnkey wrapper (any extra flag is passed through to `mmdc`):
+
+```bash
+mermaid-render diagram.mmd                 # -> diagram.svg
+mermaid-render -i diagram.mmd -o out.png   # PNG output
+mermaid-render -i diagram.mmd -o out.svg -b transparent -s 2
+```
 
 ## License
 
