@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# mermaid-render: render mermaid diagrams to SVG/PNG using mmdc with a default
+# puppeteer config (--no-sandbox), which is required to run headless Chromium as
+# a non-root user inside a container.
+#
+# Usage:
+#   mermaid-render diagram.mmd                 # -> diagram.svg
+#   mermaid-render -i diagram.mmd -o out.svg
+#   mermaid-render -i diagram.mmd -o out.png
+#   mermaid-render -i diagram.mmd -o out.svg -b transparent -s 2
+#
+# Any extra argument is passed through to mmdc verbatim.
+set -euo pipefail
+CONFIG="${MERMAID_PUPPETEER_CONFIG:-$HOME/.config/mermaid/puppeteer.json}"
+if [ "$#" -eq 1 ]; then
+  in="$1"
+  exec mmdc -p "$CONFIG" -i "$in" -o "${in%.*}.svg"
+fi
+exec mmdc -p "$CONFIG" "$@"
