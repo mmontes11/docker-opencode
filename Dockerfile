@@ -70,12 +70,11 @@ RUN curl -sfL https://raw.githubusercontent.com/mmontes11/k8s-tooling/v${K8S_TOO
 # Install Node
 RUN mkdir -p ~/.npm-global && \
     npm config set prefix '~/.npm-global' && \
-    npm install -g @modelcontextprotocol/server-filesystem
-
-# Install mermaid-cli (mmdc) for rendering mermaid diagrams to SVG/PNG.
-# Puppeteer downloads its headless Chromium to ~/.cache/puppeteer during this
-# step; it is baked into the runtime template so rendering is turnkey.
-RUN npm install -g "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}"
+    npm install -g @modelcontextprotocol/server-filesystem \
+    # Install mermaid-cli (mmdc) for rendering mermaid diagrams to SVG/PNG.
+    # Puppeteer downloads its headless Chromium to ~/.cache/puppeteer during this
+    # step; it is baked into the runtime template so rendering is turnkey.
+    npm install -g "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}"
 
 # Install Astral UV
 RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
