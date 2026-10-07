@@ -63,6 +63,18 @@
       "datasourceTemplate": "golang-version",
       "depNameTemplate": "go",
       "packageNameTemplate": "go"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "MERMAID_CLI_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "@mermaid-js/mermaid-cli",
+      "packageNameTemplate": "@mermaid-js/mermaid-cli"
     }
   ],
   "packageRules": [
@@ -106,6 +118,19 @@
       ],
       "matchPackageNames": [
         "go"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "@mermaid-js/mermaid-cli"
       ],
       "matchUpdateTypes": [
         "minor",
