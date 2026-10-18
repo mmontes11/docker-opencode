@@ -21,10 +21,17 @@ jobs:
 
       # Same private knowledge-base clone as in CI: the build installs its
       # skills from the local folder, so it must be present in the context.
+      # KNOWLEDGE_BASE_TOKEN must be a token with contents:read on
+      # mmontes11/knowledge-base only (GITHUB_TOKEN cannot read it).
       - name: Clone private knowledge-base repo
         env:
-          KB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KB_TOKEN: ${{ secrets.KNOWLEDGE_BASE_TOKEN }}
         run: |
+          if [ -z "${KB_TOKEN}" ]; then
+            echo "::warning::KNOWLEDGE_BASE_TOKEN secret not set; skipping knowledge-base skills install (private repo)."
+            mkdir -p knowledge-base
+            exit 0
+          fi
           git clone --depth 1 "https://x-access-token:${KB_TOKEN}@github.com/mmontes11/knowledge-base.git" knowledge-base
           rm -rf knowledge-base/.git
 

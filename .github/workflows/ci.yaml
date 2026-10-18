@@ -17,13 +17,23 @@ jobs:
         uses: actions/checkout@v7
 
       # The knowledge-base repo is private, so it cannot be cloned inside the
-      # image build. Clone it here with the ephemeral GITHUB_TOKEN (minimum
-      # permission: contents read) and drop .git so no credentials land in the
-      # build context. skills.sh then installs its skills from this folder.
+      # image build (GITHUB_TOKEN is scoped to this repo and gets
+      # "Repository not found"). Clone it here with a dedicated, narrowly
+      # scoped token (secret KNOWLEDGE_BASE_TOKEN: fine-grained PAT or GitHub
+      # App installation token with contents:read on mmontes11/knowledge-base
+      # only) and drop .git so no credentials land in the build context.
+      # skills.sh then installs its skills from this folder. Until the secret
+      # is set, an empty folder is staged so the build stays green and the
+      # knowledge-base skills are simply not installed.
       - name: Clone private knowledge-base repo
         env:
-          KB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KB_TOKEN: ${{ secrets.KNOWLEDGE_BASE_TOKEN }}
         run: |
+          if [ -z "${KB_TOKEN}" ]; then
+            echo "::warning::KNOWLEDGE_BASE_TOKEN secret not set; skipping knowledge-base skills install (private repo)."
+            mkdir -p knowledge-base
+            exit 0
+          fi
           git clone --depth 1 "https://x-access-token:${KB_TOKEN}@github.com/mmontes11/knowledge-base.git" knowledge-base
           rm -rf knowledge-base/.git
 

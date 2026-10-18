@@ -94,9 +94,9 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_VERSION}
 
 # Install skills
 # The knowledge-base repo is private; CI clones it into the build context
-# with the short-lived GITHUB_TOKEN. It is staged in /tmp (not in
-# /home/mmontes) and removed after install so it is not part of the
-# persistence template.
+# with a dedicated scoped token (KNOWLEDGE_BASE_TOKEN secret). It is staged
+# in /tmp (not in /home/mmontes) and removed after install so it is not part
+# of the persistence template.
 COPY --chown=1111:1111 knowledge-base/ /tmp/knowledge-base/
 COPY --chown=1111:1111 scripts/ /home/mmontes/scripts/
 RUN chmod +x /home/mmontes/scripts/*.sh && \
