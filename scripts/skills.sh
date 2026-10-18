@@ -9,7 +9,8 @@ echo "Installing mariadb-operator skills..."
 npx skills add "https://github.com/mariadb-operator/mariadb-operator" -g -a opencode -a claude-code -y || true
 
 echo "Installing knowledge-base skills..."
-npx skills add "https://github.com/mmontes11/knowledge-base" -g -a opencode -a claude-code -y || true
+# Private repo: CI clones it into the build context (see Dockerfile).
+npx skills add /tmp/knowledge-base -g -a opencode -a claude-code -y || true
 
 # Format: "RepoURL|SkillName"
 SKILLS=(

@@ -93,9 +93,15 @@ RUN ARCH=$(dpkg --print-architecture | sed 's/aarch64/arm64/') && \
 RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_VERSION}
 
 # Install skills
+# The knowledge-base repo is private; CI clones it into the build context
+# with the short-lived GITHUB_TOKEN. It is staged in /tmp (not in
+# /home/mmontes) and removed after install so it is not part of the
+# persistence template.
+COPY --chown=1111:1111 knowledge-base/ /tmp/knowledge-base/
 COPY --chown=1111:1111 scripts/ /home/mmontes/scripts/
 RUN chmod +x /home/mmontes/scripts/*.sh && \
-    /bin/bash /home/mmontes/scripts/skills.sh
+    /bin/bash /home/mmontes/scripts/skills.sh && \
+    rm -rf /tmp/knowledge-base
 
 # Install mermaid diagram rendering: bake the default no-sandbox puppeteer
 # config and a turnkey `mermaid-render` wrapper onto PATH so agents can render

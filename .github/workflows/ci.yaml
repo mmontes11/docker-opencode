@@ -16,6 +16,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      # The knowledge-base repo is private, so it cannot be cloned inside the
+      # image build. Clone it here with the ephemeral GITHUB_TOKEN (minimum
+      # permission: contents read) and drop .git so no credentials land in the
+      # build context. skills.sh then installs its skills from this folder.
+      - name: Clone private knowledge-base repo
+        env:
+          KB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${KB_TOKEN}@github.com/mmontes11/knowledge-base.git" knowledge-base
+          rm -rf knowledge-base/.git
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
 

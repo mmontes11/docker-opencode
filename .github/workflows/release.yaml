@@ -19,6 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Same private knowledge-base clone as in CI: the build installs its
+      # skills from the local folder, so it must be present in the context.
+      - name: Clone private knowledge-base repo
+        env:
+          KB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${KB_TOKEN}@github.com/mmontes11/knowledge-base.git" knowledge-base
+          rm -rf knowledge-base/.git
+
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v4
 
