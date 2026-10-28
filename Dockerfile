@@ -79,8 +79,8 @@ RUN mkdir -p ~/.npm-global && \
 # Install Astral UV
 RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
-# Install OpenCode
-RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
+# Install OpenCode (V2 installer; the V1 installer rejects V2 releases)
+RUN curl -fsSL https://opencode.ai/v2/install | bash -s -- --version ${OPENCODE_VERSION}
 
 # Install Multica CLI
 RUN ARCH=$(dpkg --print-architecture | sed 's/aarch64/arm64/') && \
@@ -116,4 +116,4 @@ WORKDIR /home/mmontes
 
 EXPOSE 4096
 
-ENTRYPOINT ["opencode", "web", "--port", "4096", "--hostname", "0.0.0.0", "--cors", "opencode.mmontes-internal.duckdns.org"]
+ENTRYPOINT ["opencode", "serve", "--port", "4096", "--hostname", "0.0.0.0", "--cors", "opencode.mmontes-internal.duckdns.org"]
