@@ -80,11 +80,11 @@ RUN mkdir -p ~/.npm-global && \
 RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 # Install OpenCode
-# The installer URL depends on the major version: the V1 installer (/install)
-# refuses V2 releases, and the V2 installer (/v2/install) serves V2+ releases.
+# The installer is served per major version at /v<major>/install (e.g. /v2/install).
+# /v1/install does not exist, so major < 2 uses the unversioned /install.
 RUN set -eu; \
     major="${OPENCODE_VERSION%%.*}"; \
-    if [ "$major" -ge 2 ]; then install_url="https://opencode.ai/v2/install"; else install_url="https://opencode.ai/install"; fi; \
+    if [ "$major" -lt 2 ]; then install_url="https://opencode.ai/install"; else install_url="https://opencode.ai/v${major}/install"; fi; \
     curl -fsSL "$install_url" | bash -s -- --version "${OPENCODE_VERSION}"
 
 # Install Multica CLI
