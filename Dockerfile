@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip wget ca-certificates sudo libmagic1 ffmpeg rsync lsof \
     python3-dev libffi-dev libssl-dev gettext-base \
     net-tools dnsutils traceroute \
+    # PDF manipulation.
+    poppler-utils \
     libnss3 libnspr4 libatk1.0-0t64 libatk-bridge2.0-0t64 libatspi2.0-0t64 \
     libcups2t64 libdbus-1-3 libavahi-client3 libavahi-common3 \
     libdrm2 libgbm1 libxkbcommon0 libasound2t64 \
