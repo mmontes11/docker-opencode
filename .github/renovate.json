@@ -75,18 +75,6 @@
       "datasourceTemplate": "npm",
       "depNameTemplate": "@mermaid-js/mermaid-cli",
       "packageNameTemplate": "@mermaid-js/mermaid-cli"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^Dockerfile$/"
-      ],
-      "matchStrings": [
-        "CAVEMAN_VERSION=(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
-      ],
-      "datasourceTemplate": "npm",
-      "depNameTemplate": "@caveman-ai/cli",
-      "packageNameTemplate": "@caveman-ai/cli"
     }
   ],
   "packageRules": [
@@ -143,19 +131,6 @@
       ],
       "matchPackageNames": [
         "@mermaid-js/mermaid-cli"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "automerge": true
-    },
-    {
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchPackageNames": [
-        "@caveman-ai/cli"
       ],
       "matchUpdateTypes": [
         "minor",

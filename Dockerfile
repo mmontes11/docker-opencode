@@ -9,15 +9,12 @@ ARG MULTICA_VERSION=0.11.1
 ARG CLAUDE_VERSION=2.1.330
 ARG K8S_TOOLING_VERSION=0.80.0
 ARG MERMAID_CLI_VERSION=12.2.0
-ARG CAVEMAN_VERSION=4.2.0
 
 # Environment
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC \
     SHELL=/bin/bash \
     EDITOR=vim \
-    # caveman CLI sends usage telemetry by default; keep the homelab local.
-    DO_NOT_TRACK=1 \
     GOPATH=/home/mmontes/go \
     PATH="/home/mmontes/.opencode/bin:/home/mmontes/.local/bin:/home/mmontes/usr/local/go/bin:/home/mmontes/go/bin:/home/mmontes/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -77,10 +74,6 @@ RUN curl -sfL https://raw.githubusercontent.com/mmontes11/k8s-tooling/v${K8S_TOO
 RUN mkdir -p ~/.npm-global && \
     npm config set prefix '~/.npm-global' && \
     npm install -g @modelcontextprotocol/server-filesystem \
-    # Install caveman CLI (pinned): shorter agent answers and tool-output
-    # compression for opencode and Claude Code. Lands in ~/.npm-global, which
-    # the k8s-ai initContainer rsyncs from /opt/template on every pod start.
-    npm install -g "@caveman-ai/cli@${CAVEMAN_VERSION}" \
     # Install mermaid-cli (mmdc) for rendering mermaid diagrams to SVG/PNG.
     # Puppeteer downloads its headless Chromium to ~/.cache/puppeteer during this
     # step; it is baked into the runtime template so rendering is turnkey.
@@ -111,28 +104,6 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_VERSION}
 COPY --chown=1111:1111 scripts/ /home/mmontes/scripts/
 RUN chmod +x /home/mmontes/scripts/*.sh && \
     /bin/bash /home/mmontes/scripts/skills.sh
-
-# Install the caveman always-on wiring for opencode (no proxy): native plugin,
-# slash commands, cavecrew agents, skills and the always-on voice rules in
-# /home/mmontes/.config/opencode/AGENTS.md. The installer patches
-# /home/mmontes/.config/opencode/opencode.jsonc, which opencode deep-merges
-# with the deployment's ConfigMap-managed opencode.json, so the plugin
-# registration and the provider config coexist. Pinned to the caveman CLI
-# release tag; --allow-git=root is required because the npm 12 bundled with
-# Node 22.23.x blocks git installs by default.
-RUN npx --allow-git=root -y "github:JuliusBrussee/caveman#v${CAVEMAN_VERSION}" -- --only opencode \
-    && mkdir -p /home/mmontes/.config/caveman \
-    && echo '{"defaultMode": "caveman"}' > /home/mmontes/.config/caveman/config.json
-
-# Register the caveman plugin for Claude Code (always on, no proxy): the
-# claude CLI writes the plugin registration and files under
-# /home/mmontes/.claude/, which the k8s-ai initContainer rsyncs onto the PVC
-# (merge-only, nothing already on the PVC is overwritten), so user settings on
-# the volume are preserved. The default voice ("caveman") comes from
-# /home/mmontes/.config/caveman/config.json; headless `claude -p` runs
-# (multica daemon) additionally need CAVEMAN_DEFAULT_MODE in the deployment.
-RUN claude plugin marketplace add JuliusBrussee/caveman \
-    && claude plugin install caveman@caveman
 
 # Install mermaid diagram rendering: bake the default no-sandbox puppeteer
 # config and a turnkey `mermaid-render` wrapper onto PATH so agents can render

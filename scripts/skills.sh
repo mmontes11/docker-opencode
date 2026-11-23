@@ -8,9 +8,6 @@ npx skills add "https://github.com/mmontes11/skills" -g -a opencode -a claude-co
 echo "Installing mariadb-operator skills..."
 npx skills add "https://github.com/mariadb-operator/mariadb-operator" -g -a opencode -a claude-code -y || true
 
-echo "Installing caveman skills..."
-npx skills add "https://github.com/JuliusBrussee/caveman" -g -a opencode -a claude-code -y || true
-
 # Format: "RepoURL|SkillName"
 SKILLS=(
   "https://github.com/anthropics/skills|canvas-design"
